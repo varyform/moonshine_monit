@@ -93,4 +93,4 @@ set httpd port <%= options[:gui][:port] || 9001 %> and
     allow "<%= options[:gui][:user] %>":<%= options[:gui][:password] %>
 <% end %>
 
-include /etc/monit.d/*
+include /etc/monit/conf.d/*

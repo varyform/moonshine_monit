@@ -12,8 +12,8 @@ module Monit
   def monit(options = {})
     package 'monit', :ensure => :installed
 
-    file '/etc/monit/monitrc', 
-      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
+    file '/etc/monit/monitrc',
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding),
       :mode => '600',
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
@@ -21,22 +21,22 @@ module Monit
       :before => service('monit'),
       :notify => service('monit')
 
-    file '/etc/monit.d', 
+    file '/etc/monit/conf.d',
       :ensure => :directory,
       :mode   => '755',
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
       :before => service("monit")
 
-    file '/etc/monit.d/apache', 
-      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'apache'), binding), 
+    file '/etc/monit/conf.d/apache',
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'apache'), binding),
       :mode => '600',
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
       :require => file('/etc/monit.d')
 
-    file '/etc/default/monit', 
-      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')), 
+    file '/etc/default/monit',
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')),
       :mode => '644',
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
@@ -53,9 +53,9 @@ module Monit
       :require => file('/etc/init.d/monit'),
       :refreshonly => true
 
-    service 'monit', 
+    service 'monit',
       :require => package('monit'),
-      :enable => true, 
+      :enable => true,
       :ensure => :running
   end
 
