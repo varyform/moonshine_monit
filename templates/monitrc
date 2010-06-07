@@ -85,15 +85,15 @@ set alert <%= options[:alerts][:timeout_email] %> only on { timeout } # receive 
 ## and manage services from a web interface.
 #
 # User and password are required to access the monit gui
-set httpd port <%= (options[:gui] && options[:gui][:port]) || 2812 %>
-  <% if options[:gui][:address] %>
-  use address <%= options[:gui][:address] %>
-  <% end %>
-  allow localhost
+set httpd port <%= (options[:gui] && options[:gui][:port]) || 2812 %> and
+<% if options[:gui][:address] %>
+use address <%= options[:gui][:address] %>
+<% end %>
+allow localhost
 <% if options[:gui][:allowed_ips] %>
-  <% (options[:gui][:allowed_ips] || []).each do |ip| %>
-  allow <%= ip %>
-  <% end %>
+<% (options[:gui][:allowed_ips] || []).each do |ip| %>
+allow <%= ip %>
+<% end %>
 <% end %>
 
 <% if options[:gui] && options[:gui][:user] && options[:gui][:password] %>
