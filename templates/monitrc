@@ -97,8 +97,7 @@ set httpd port <%= (options[:gui] && options[:gui][:port]) || 2812 %>
 <% end %>
 
 <% if options[:gui] && options[:gui][:user] && options[:gui][:password] %>
-set httpd port <%= options[:gui][:port] || 9001 %> and
-    allow <%= options[:gui][:user] %>:<%= options[:gui][:password] %>
+  allow <%= options[:gui][:user] %>:<%= options[:gui][:password] %>
 <% end %>
 
 include /etc/monit/conf.d/*
