@@ -33,7 +33,7 @@ module Monit
       :mode => '600',
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
-      :require => file('/etc/monit.d')
+      :require => file('/etc/monit/conf.d')
 
     file '/etc/default/monit',
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')),
