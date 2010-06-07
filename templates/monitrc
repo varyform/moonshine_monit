@@ -86,11 +86,19 @@ set alert <%= options[:alerts][:timeout_email] %> only on { timeout } # receive 
 #
 # User and password are required to access the monit gui
 set httpd port <%= (options[:gui] && options[:gui][:port]) || 2812 %>
+  <% if options[:gui][:address] %>
+  use address <%= options[:gui][:address] %>
+  <% end %>
   allow localhost
+<% if options[:gui][:allowed_ips] %>
+  <% (options[:gui][:allowed_ips] || []).each do |ip| %>
+  allow <%= ip %>
+  <% end %>
+<% end %>
 
 <% if options[:gui] && options[:gui][:user] && options[:gui][:password] %>
 set httpd port <%= options[:gui][:port] || 9001 %> and
-    allow "<%= options[:gui][:user] %>":<%= options[:gui][:password] %>
+    allow <%= options[:gui][:user] %>:<%= options[:gui][:password] %>
 <% end %>
 
 include /etc/monit/conf.d/*
